@@ -159,7 +159,11 @@ class Media(UpdatableElement):
                     if "display_resources" in edge["node"]:
                         child.resources = [resource["src"] for resource in edge["node"]["display_resources"]]
                     else:
-                        child.resources = [resource["src"] for resource in edge["node"]["thumbnail_resources"]]
+                        try:
+                            child.resources = [resource["src"] for resource in edge["node"]["thumbnail_resources"]]
+                        except Exception as err:
+                            print("!!!", err)
+                            child.resources = []
                     child.is_album = False
                     self.album.add(child)
 
